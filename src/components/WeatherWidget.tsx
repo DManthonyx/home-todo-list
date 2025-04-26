@@ -1,13 +1,14 @@
 import { useWeather } from '../hooks/weather-hooks';
 import { WeatherData } from '../types/weather';
 
-interface WeatherProps {
+interface WeatherWidgetProps {
   onMinimize: () => void;
-  showMinimizeButton?: boolean;
+  isWeatherVisible: boolean;
 }
 
-export const Weather = ({ onMinimize, showMinimizeButton = true }: WeatherProps) => {
+export const WeatherWidget = ({ onMinimize, isWeatherVisible }: WeatherWidgetProps) => {
   const { currentWeather, weather, loading, error } = useWeather();
+  if (!isWeatherVisible) return null;
 
   if (loading) {
     return (
@@ -30,7 +31,6 @@ export const Weather = ({ onMinimize, showMinimizeButton = true }: WeatherProps)
 
   return (
     <div className="bg-gray-800 rounded-lg shadow-lg p-3 text-white relative">
-      {showMinimizeButton && (
         <button
           onClick={onMinimize}
           className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-700 transition-colors"
@@ -51,7 +51,6 @@ export const Weather = ({ onMinimize, showMinimizeButton = true }: WeatherProps)
             />
           </svg>
         </button>
-      )}
       <div className="flex items-start gap-4">
         {currentWeather && (
           <div className="flex items-center gap-3">

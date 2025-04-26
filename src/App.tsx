@@ -6,12 +6,11 @@ import { useAuth } from './hooks/auth-hooks';
 import { Calendar } from './components/Calendar';
 import { KeyboardProvider, useKeyboard } from './contexts/KeyboardContext';
 import { Keyboard } from './components/Keyboard';
-import { Header } from './components/Header';
+import { Header } from './components/ViewHeader';
 import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';
 import { db } from './config/firebase';
 import { Todo } from './types/todo';
 import { VisibilityToggles } from './components/VisibilityToggles';
-import { Weather } from './components/Weather';
 
 const AppContent = () => {
   const { currentUser } = useAuth();
@@ -70,16 +69,12 @@ const AppContent = () => {
   }, [setActiveInput, keyboardRef, activeInput]);
 
   return (
-    <div className="min-h-screen bg-gray-900 dark:bg-black transition-colors duration-200">
+    <div className="min-h-screen bg-gray-900 dark:bg-black transition-colors duration-200 flex flex-col">
       <Header />
-      <main className="pt-16">
+      <main className="flex-1 pt-16">
         {isCalendarVisible && <Calendar todos={todos} onMinimize={() => setIsCalendarVisible(false)} />}
         {currentUser && isTodoListVisible && <TodoList onMinimize={() => setIsTodoListVisible(false)} />}
         {!currentUser && <Login />}
-        <Weather
-          onMinimize={() => {}}
-          showMinimizeButton={!isTodoListVisible || !isCalendarVisible}
-        />
       </main>
       {activeInput && <Keyboard />}
       {(!isTodoListVisible || !isCalendarVisible) && (

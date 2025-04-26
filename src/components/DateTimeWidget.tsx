@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 
-interface DateTimeProps {
+interface DateTimeWidgetProps {
   onMinimize: () => void;
+  isDateTimeVisible: boolean;
 }
 
-export const DateTime = ({ onMinimize }: DateTimeProps) => {
+export const DateTimeWidget = ({ onMinimize, isDateTimeVisible }: DateTimeWidgetProps) => {
   const [dateTime, setDateTime] = useState(new Date());
 
   useEffect(() => {
@@ -32,6 +33,8 @@ export const DateTime = ({ onMinimize }: DateTimeProps) => {
       day: 'numeric'
     });
   };
+
+  if (!isDateTimeVisible) return null;
 
   return (
     <div className="bg-gray-800 rounded-lg shadow-lg p-4 text-white">

@@ -65,7 +65,7 @@ export const useWeather = () => {
 
         // Transform forecast data (get one forecast per day)
         const transformedForecast: WeatherData[] = forecastData.list
-          .filter((item, index) => index % 8 === 0) // Get one forecast per day
+          .filter((_, index) => index % 8 === 0) // Get one forecast per day
           .map(item => ({
             date: new Date(item.dt * 1000).toLocaleDateString('en-US', { weekday: 'short' }),
             temp: Math.round(item.main.temp),

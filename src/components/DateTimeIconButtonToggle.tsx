@@ -1,8 +1,10 @@
-interface MinimizedDateTimeProps {
+interface DateTimeIconButtonToggleProps {
   onMaximize: () => void;
+  isDateTimeVisible: boolean;
 }
 
-export const MinimizedDateTime = ({ onMaximize }: MinimizedDateTimeProps) => {
+export const DateTimeIconButtonToggle = ({ onMaximize, isDateTimeVisible }: DateTimeIconButtonToggleProps) => {
+  if (isDateTimeVisible) return null;
   return (
     <button
       onClick={onMaximize}

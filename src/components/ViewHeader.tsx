@@ -1,26 +1,19 @@
-import { useState, useEffect } from 'react';
-import { MinimizedDateTime } from './MinimizedDateTime';
-import { MinimizedWeather } from './MinimizedWeather';
+import { useState } from 'react';
+import { DateTimeIconButtonToggle } from './DateTimeIconButtonToggle';
+import { WeatherIconButtonToggle } from './WeatherIconButtonToggle';
 import { OffScreenToggle } from './OffScreenToggle';
-import { DateTime } from './DateTime';
-import { Weather } from './Weather';
+import { DateTimeWidget } from './DateTimeWidget';
+import { WeatherWidget } from './WeatherWidget';
 import { useAuth } from '../hooks/auth-hooks';
 
 export const Header = () => {
   const { logout } = useAuth();
-  const [dateTime, setDateTime] = useState(new Date());
-  const [isWeatherMinimized, setIsWeatherMinimized] = useState(true);
-  const [isDateTimeMinimized, setIsDateTimeMinimized] = useState(true);
+  // States for visibility of widgets
+  const [isWeatherVisible, setIsWeatherVisible] = useState(false);
+  const [isDateTimeVisible, setIsDateTimeVisible] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [logoutError, setLogoutError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setDateTime(new Date());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
 
   const handleLogout = async () => {
     try {
@@ -38,29 +31,24 @@ export const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="flex justify-end items-center gap-4 p-4">
-        <div className="flex items-center gap-4">
-          {isDateTimeMinimized ? (
-            <MinimizedDateTime 
-              dateTime={dateTime} 
-              onMaximize={() => setIsDateTimeMinimized(false)} 
+        <div className="fixed top-4 left-2 transition-opacity duration-500">
+          <DateTimeWidget isDateTimeVisible={isDateTimeVisible} onMinimize={() => setIsDateTimeVisible(false)} />
+        </div>
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
+          <WeatherWidget 
+            isWeatherVisible={isWeatherVisible}
+            onMinimize={() => setIsWeatherVisible(false)} 
+         />
+        </div>
+        <div className="widget-icon-button-container flex items-center gap-4">
+            <DateTimeIconButtonToggle 
+              isDateTimeVisible={isDateTimeVisible}
+              onMaximize={() => setIsDateTimeVisible(true)} 
             />
-          ) : (
-            <div className="fixed top-4 right-[calc(50%+8rem)] transition-opacity duration-500">
-              <DateTime onMinimize={() => setIsDateTimeMinimized(true)} />
-            </div>
-          )}
-          {isWeatherMinimized ? (
-            <MinimizedWeather 
-              onMaximize={() => setIsWeatherMinimized(false)} 
+            <WeatherIconButtonToggle 
+              isWeatherVisible={isWeatherVisible}
+              onMaximize={() => setIsWeatherVisible(true)} 
             />
-          ) : (
-            <div className="fixed top-4 right-[calc(50%-8rem)] transition-opacity duration-500">
-              <Weather 
-                onMinimize={() => setIsWeatherMinimized(true)} 
-              />
-            </div>
-          )}
-          <OffScreenToggle />
           <div className="relative">
             <button
               onClick={handleLogout}
@@ -91,6 +79,7 @@ export const Header = () => {
               </div>
             )}
           </div>
+          <OffScreenToggle />
         </div>
       </div>
     </header>
