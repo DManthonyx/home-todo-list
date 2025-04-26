@@ -16,6 +16,7 @@ export const CreateTodo = ({ onAdd }: CreateTodoProps) => {
       await onAdd(newTodo, newTodoDueDate);
       setNewTodo('');
       setNewTodoDueDate('');
+      setActiveInput(null);
     }
   };
 
@@ -26,10 +27,10 @@ export const CreateTodo = ({ onAdd }: CreateTodoProps) => {
   // Handle keyboard input
   useEffect(() => {
     if (activeInput?.id === 'new-todo-input') {
-        const input = activeInput as HTMLInputElement;
-        setNewTodo(input.value);
+      const input = activeInput as HTMLInputElement;
+      setNewTodo(input.value);
     }
-}, [activeInput]);
+  }, [activeInput]);
 
   return (
     <div className="flex flex-col gap-3 mb-6">
@@ -40,7 +41,16 @@ export const CreateTodo = ({ onAdd }: CreateTodoProps) => {
           type="text"
           value={newTodo}
           onChange={handleInputChange}
-          onFocus={() => setActiveInput(addTodoRef.current)}
+          onFocus={() => {
+            if (addTodoRef.current) {
+              setActiveInput(addTodoRef.current);
+            }
+          }}
+          onBlur={() => {
+            if (activeInput?.id === 'new-todo-input') {
+              setActiveInput(null);
+            }
+          }}
           onKeyPress={(e) => e.key === 'Enter' && handleAdd()}
           placeholder="Add a new todo"
           className="flex-1 px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"

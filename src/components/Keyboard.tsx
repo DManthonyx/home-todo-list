@@ -22,7 +22,7 @@ export const Keyboard = () => {
   return (
     <div 
       ref={keyboardRef}
-      className="fixed right-0 bottom-0 bg-gray-800 rounded-tl-lg shadow-lg p-6 z-50"
+      className="fixed left-1/2 -translate-x-1/2 bottom-0 bg-gray-800 rounded-t-lg shadow-lg p-6 z-50"
       onClick={handleContainerClick}
       onMouseDown={handleContainerClick}
     >

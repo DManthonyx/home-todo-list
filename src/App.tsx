@@ -3,19 +3,22 @@ import { TodoList } from './components/todo/TodoList';
 import { Login } from './components/Login';
 import { AuthProvider } from './contexts/AuthContext';
 import { useAuth } from './hooks/auth-hooks';
-import { DateTime } from './components/DateTime';
-import { Weather } from './components/Weather';
 import { Calendar } from './components/Calendar';
 import { KeyboardProvider, useKeyboard } from './contexts/KeyboardContext';
 import { Keyboard } from './components/Keyboard';
+import { Header } from './components/Header';
 import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';
 import { db } from './config/firebase';
 import { Todo } from './types/todo';
+import { VisibilityToggles } from './components/VisibilityToggles';
+import { Weather } from './components/Weather';
 
 const AppContent = () => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser } = useAuth();
   const { activeInput, setActiveInput, keyboardRef } = useKeyboard();
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [isTodoListVisible, setIsTodoListVisible] = useState(true);
+  const [isCalendarVisible, setIsCalendarVisible] = useState(true);
 
   useEffect(() => {
     if (!currentUser) return;
@@ -45,16 +48,13 @@ const AppContent = () => {
   }, [currentUser]);
 
   useEffect(() => {
-
     const handleBlur = (e: FocusEvent) => {
-      // Only close if clicking outside both the input and keyboard
       if (!keyboardRef.current?.contains(e.relatedTarget as Node)) {
         setActiveInput(null);
       }
     };
 
     const handleClick = (e: MouseEvent) => {
-      // If clicking outside both input and keyboard, close the keyboard
       if (activeInput && !keyboardRef.current?.contains(e.target as Node)) {
         setActiveInput(null);
       }
@@ -64,33 +64,32 @@ const AppContent = () => {
     document.addEventListener('mousedown', handleClick, true);
 
     return () => {
-      // document.removeEventListener('focusin', handleFocus);
       document.removeEventListener('focusout', handleBlur);
       document.removeEventListener('mousedown', handleClick, true);
     };
   }, [setActiveInput, keyboardRef, activeInput]);
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8">
-      <div className="fixed top-4 right-4">
-        {currentUser && (
-          <button
-            onClick={logout}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-          >
-            Logout
-          </button>
-        )}
-      </div>
-      <DateTime />
-      <Weather />
-      <Calendar todos={todos} />
-      {currentUser ? (
-        <TodoList />
-      ) : (
-        <Login />
-      )}
+    <div className="min-h-screen bg-gray-900 dark:bg-black transition-colors duration-200">
+      <Header />
+      <main className="pt-16">
+        {isCalendarVisible && <Calendar todos={todos} onMinimize={() => setIsCalendarVisible(false)} />}
+        {currentUser && isTodoListVisible && <TodoList onMinimize={() => setIsTodoListVisible(false)} />}
+        {!currentUser && <Login />}
+        <Weather
+          onMinimize={() => {}}
+          showMinimizeButton={!isTodoListVisible || !isCalendarVisible}
+        />
+      </main>
       {activeInput && <Keyboard />}
+      {(!isTodoListVisible || !isCalendarVisible) && (
+        <VisibilityToggles
+          isTodoListVisible={isTodoListVisible}
+          isCalendarVisible={isCalendarVisible}
+          onToggleTodoList={() => setIsTodoListVisible(!isTodoListVisible)}
+          onToggleCalendar={() => setIsCalendarVisible(!isCalendarVisible)}
+        />
+      )}
     </div>
   );
 };

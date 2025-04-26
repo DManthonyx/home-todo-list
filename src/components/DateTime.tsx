@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 
-export const DateTime = () => {
+interface DateTimeProps {
+  onMinimize: () => void;
+}
+
+export const DateTime = ({ onMinimize }: DateTimeProps) => {
   const [dateTime, setDateTime] = useState(new Date());
 
   useEffect(() => {
@@ -30,9 +34,31 @@ export const DateTime = () => {
   };
 
   return (
-    <div className="fixed top-4 right-4 bg-gray-800 rounded-lg shadow-lg p-4 text-white">
-      <div className="text-2xl font-bold">{formatTime(dateTime)}</div>
-      <div className="text-sm text-gray-400">{formatDate(dateTime)}</div>
+    <div className="bg-gray-800 rounded-lg shadow-lg p-4 text-white">
+      <div className="relative">
+        <div className="text-2xl font-bold">{formatTime(dateTime)}</div>
+        <div className="text-sm text-gray-400">{formatDate(dateTime)}</div>
+        <button
+          onClick={onMinimize}
+          className="absolute -top-4 -right-2 p-1 rounded-full hover:bg-gray-700 transition-colors"
+          aria-label="Minimize date and time"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }; 

@@ -6,7 +6,11 @@ import { useAuth } from '../../hooks/auth-hooks';
 import { TodoItem } from './TodoItem';
 import { CreateTodo } from './CreateTodo';
 
-export const TodoList = () => {
+interface TodoListProps {
+  onMinimize: () => void;
+}
+
+export const TodoList = ({ onMinimize }: TodoListProps) => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editText, setEditText] = useState('');
@@ -152,8 +156,30 @@ export const TodoList = () => {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 w-96 bg-gray-800 rounded-lg shadow-lg p-6">
-      <h1 className="text-2xl font-bold mb-6 text-white">Todo List</h1>
+    <div className={"fixed bottom-4 left-4 w-96 bg-gray-800 rounded-lg shadow-lg p-6"}>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-white">Todo List</h1>
+        <button
+          onClick={onMinimize}
+          className="p-1 rounded-full hover:bg-gray-700 transition-colors"
+          aria-label="Minimize todo list"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </button>
+      </div>
       
       {error && (
         <div className="mb-4 p-3 bg-red-500 text-white rounded-lg">
