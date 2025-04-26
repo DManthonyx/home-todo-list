@@ -1,4 +1,4 @@
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../hooks/auth-hooks';
 
 export const Login = () => {
   const { signInWithGoogle } = useAuth();
