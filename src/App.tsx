@@ -93,7 +93,7 @@ const AppContent = () => {
   }, [setActiveInput, keyboardRef, activeInput]);
 
   return (
-    <main className="min-h-screen bg-black duration-200 flex flex-col border border-white">
+    <main className="min-h-screen bg-black duration-200 flex flex-col border-5 border-white">
       <div className="fixed top-0 left-0 right-0 z-50">
         <div className="flex justify-end items-center gap-4 p-4">
           <div className="fixed top-4 left-2 transition-opacity duration-500">
