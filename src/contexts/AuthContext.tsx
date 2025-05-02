@@ -16,7 +16,6 @@ interface AuthContextType {
 }
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);

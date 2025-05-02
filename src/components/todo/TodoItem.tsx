@@ -8,7 +8,6 @@ interface TodoItemProps {
   onDelete: (id: string) => Promise<void>;
   onEdit: (todo: Todo) => void;
   onSaveEdit: (id: string) => Promise<void>;
-  onUpdateDueDate: (id: string, newDueDate: Date) => Promise<void>;
   editingId: string | null;
   editText: string;
   setEditText: (text: string) => void;
@@ -22,7 +21,6 @@ export const TodoItem = ({
   onDelete,
   onEdit,
   onSaveEdit,
-  onUpdateDueDate,
   editingId,
   editText,
   setEditText,
@@ -44,7 +42,7 @@ export const TodoItem = ({
 }, [activeInput, todo.id, setEditText]);
 
   return (
-    <li className="flex flex-col p-3 bg-gray-700 rounded-lg">
+    <li className="flex flex-col p-3 rounded-lg">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-3 min-w-0">
           <input
@@ -78,13 +76,13 @@ export const TodoItem = ({
             <>
               <button
                 onClick={() => onSaveEdit(todo.id)}
-                className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                className="px-3 py-1 bg-green-600 text-white rounded"
               >
                 Save
               </button>
               <button
                 onClick={() => setEditingId(null)}
-                className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+                className="px-3 py-1 bg-gray-600 text-white rounded"
               >
                 Cancel
               </button>
@@ -93,13 +91,13 @@ export const TodoItem = ({
             <>
               <button
                 onClick={() => onEdit(todo)}
-                className="px-3 py-1 text-blue-400 hover:text-blue-300"
+                className="px-3 py-1 text-white"
               >
                 Edit
               </button>
               <button
                 onClick={() => onDelete(todo.id)}
-                className="px-3 py-1 text-red-400 hover:text-red-300"
+                className="px-3 py-1 text-white"
               >
                 Delete
               </button>
@@ -108,12 +106,6 @@ export const TodoItem = ({
         </div>
       </div>
       <div className="mt-2 flex items-center gap-2">
-        <input
-          type="date"
-          value={todo.dueDate.toISOString().split('T')[0]}
-          onChange={(e) => onUpdateDueDate(todo.id, new Date(e.target.value))}
-          className="px-2 py-1 bg-gray-600 text-white border border-gray-500 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
         <span className="text-sm text-gray-400">
           Due: {formatDate(todo.dueDate)}
         </span>

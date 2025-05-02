@@ -53,12 +53,12 @@ export const CreateTodo = ({ onAdd }: CreateTodoProps) => {
           }}
           onKeyPress={(e) => e.key === 'Enter' && handleAdd()}
           placeholder="Add a new todo"
-          className="flex-1 px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
+          className="flex-1 px-4 py-2 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
         />
         <button
           type="button"
           onClick={handleAdd}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-2 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Add
         </button>
@@ -70,7 +70,7 @@ export const CreateTodo = ({ onAdd }: CreateTodoProps) => {
           value={newTodoDueDate}
           onChange={(e) => setNewTodoDueDate(e.target.value)}
           placeholder="Due date"
-          className="flex-1 px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-datetime-edit]:text-gray-400 [&::-webkit-datetime-edit-fields-wrapper]:text-gray-400 [&::-webkit-datetime-edit-text]:text-gray-400 [&::-webkit-datetime-edit-month-field]:text-gray-400 [&::-webkit-datetime-edit-day-field]:text-gray-400 [&::-webkit-datetime-edit-year-field]:text-gray-400"
+          className="flex-1 px-4 py-2 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-datetime-edit]:text-gray-400 [&::-webkit-datetime-edit-fields-wrapper]:text-gray-400 [&::-webkit-datetime-edit-text]:text-gray-400 [&::-webkit-datetime-edit-month-field]:text-gray-400 [&::-webkit-datetime-edit-day-field]:text-gray-400 [&::-webkit-datetime-edit-year-field]:text-gray-400"
         />
       </div>
     </div>

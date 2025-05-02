@@ -2,16 +2,14 @@ import { useWeather } from '../hooks/weather-hooks';
 
 interface WeatherIconButtonToggleProps {
   onMaximize: () => void;
-  isWeatherVisible: boolean;
 }
 
-export const WeatherIconButtonToggle = ({ onMaximize, isWeatherVisible }: WeatherIconButtonToggleProps) => {
+export const WeatherIconButtonToggle = ({ onMaximize }: WeatherIconButtonToggleProps) => {
   const { currentWeather } = useWeather();
-  if (isWeatherVisible) return null;
   return (
       <button
         onClick={onMaximize}
-        className="rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
+        className="rounded-full transition-colors"
       >
         {currentWeather && (
             <img

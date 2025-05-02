@@ -37,13 +37,13 @@ export const DateTimeWidget = ({ onMinimize, isDateTimeVisible }: DateTimeWidget
   if (!isDateTimeVisible) return null;
 
   return (
-    <div className="bg-gray-800 rounded-lg shadow-lg p-4 text-white">
+    <div className="rounded-lg shadow-lg p-4 text-white">
       <div className="relative">
         <div className="text-2xl font-bold">{formatTime(dateTime)}</div>
         <div className="text-sm text-gray-400">{formatDate(dateTime)}</div>
         <button
           onClick={onMinimize}
-          className="absolute -top-4 -right-2 p-1 rounded-full hover:bg-gray-700 transition-colors"
+          className="absolute -top-4 -right-2 p-1 rounded-full transition-colors"
           aria-label="Minimize date and time"
         >
           <svg

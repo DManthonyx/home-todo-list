@@ -4,10 +4,10 @@ export const Login = () => {
   const { signInWithGoogle } = useAuth();
 
   return (
-    <div className="fixed bottom-4 left-4">
+    <div className="fixed bottom-4 right-4">
       <button
         onClick={signInWithGoogle}
-        className="flex items-center justify-center gap-3 px-4 py-3 bg-white text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="flex items-center justify-center gap-3 px-4 py-3 bg-white text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         <svg className="w-6 h-6" viewBox="0 0 24 24">
           <path

@@ -22,7 +22,7 @@ export const Keyboard = () => {
   return (
     <div 
       ref={keyboardRef}
-      className="fixed left-1/2 -translate-x-1/2 bottom-0 bg-gray-800 rounded-t-lg shadow-lg p-6 z-50"
+      className="fixed left-1/2 -translate-x-1/2 bottom-0 rounded-t-lg shadow-lg p-6 z-50"
       onClick={handleContainerClick}
       onMouseDown={handleContainerClick}
     >
@@ -35,7 +35,7 @@ export const Keyboard = () => {
                 type="button"
                 onMouseDown={() => handleKeyClick(key)}
                 onTouchStart={() => handleKeyClick(key)}
-                className="w-12 h-12 text-lg bg-gray-700 text-white rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 active:bg-gray-500 select-none"
+                className="w-12 h-12 text-lg bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 active:bg-gray-500 select-none"
                 style={{ touchAction: 'manipulation' }}
               >
                 {key}

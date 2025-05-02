@@ -12,7 +12,7 @@ export const WeatherWidget = ({ onMinimize, isWeatherVisible }: WeatherWidgetPro
 
   if (loading) {
     return (
-      <div className="bg-gray-800 rounded-lg shadow-lg p-3 text-white">
+      <div className="border border-white rounded-lg shadow-lg p-3 text-white/100">
         Loading weather...
       </div>
     );
@@ -20,9 +20,9 @@ export const WeatherWidget = ({ onMinimize, isWeatherVisible }: WeatherWidgetPro
 
   if (error) {
     return (
-      <div className="bg-gray-800 rounded-lg shadow-lg p-3 text-white">
+      <div className="border border-white rounded-lg shadow-lg p-3 text-white/100">
         <div className="text-red-400">Error: {error}</div>
-        <div className="text-xs text-gray-400 mt-1">
+        <div className="text-xs text-white/70 mt-1">
           Please check your API key and try again later.
         </div>
       </div>
@@ -30,15 +30,15 @@ export const WeatherWidget = ({ onMinimize, isWeatherVisible }: WeatherWidgetPro
   }
 
   return (
-    <div className="bg-gray-800 rounded-lg shadow-lg p-3 text-white relative">
+    <div className="rounded-lg shadow-lg p-3 text-white/100 relative">
         <button
           onClick={onMinimize}
-          className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-700 transition-colors"
+          className="absolute top-2 right-2 p-1 rounded-full transition-colors"
           aria-label="Minimize weather"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 text-gray-400"
+            className="h-4 w-4 text-white/70"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -60,26 +60,26 @@ export const WeatherWidget = ({ onMinimize, isWeatherVisible }: WeatherWidgetPro
               className="w-12 h-12"
             />
             <div>
-              <div className="text-xl font-bold">West Covina {currentWeather.temp}°F</div>
-              <div className="text-xs text-gray-400">{currentWeather.description}</div>
-              <div className="text-xs text-gray-400">
+              <div className="text-xl font-bold text-white/100">West Covina {currentWeather.temp}°F</div>
+              <div className="text-xs text-white/70">{currentWeather.description}</div>
+              <div className="text-xs text-white/70">
                 Humidity: {currentWeather.humidity}% | Wind: {currentWeather.windSpeed} mph
               </div>
             </div>
           </div>
         )}
-        <div className="border-l border-gray-700 pl-4">
+        <div className="border-l border-white/30 pl-4">
           <div className="grid grid-cols-7 gap-1">
             {weather.map((day: WeatherData) => (
               <div key={day.date} className="text-center">
-                <div className="text-xs font-semibold">{day.date}</div>
+                <div className="text-xs font-semibold text-white/100">{day.date}</div>
                 <img
                   src={`http://openweathermap.org/img/wn/${day.icon}@2x.png`}
                   alt={day.description}
                   className="w-8 h-8 mx-auto"
                 />
-                <div className="text-xs">{day.temp}°F</div>
-                <div className="text-xs text-gray-400">{day.description}</div>
+                <div className="text-xs text-white/100">{day.temp}°F</div>
+                <div className="text-xs text-white/70">{day.description}</div>
               </div>
             ))}
           </div>

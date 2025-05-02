@@ -6,7 +6,7 @@ interface CalendarProps {
   onMinimize: () => void;
 }
 
-export const Calendar = ({ todos, onMinimize }: CalendarProps) => {
+export const CalendarWidget = ({ todos, onMinimize }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -77,6 +77,13 @@ export const Calendar = ({ todos, onMinimize }: CalendarProps) => {
     return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
   };
 
+  const isToday = (date: Date) => {
+    const today = new Date();
+    return date.getDate() === today.getDate() &&
+           date.getMonth() === today.getMonth() &&
+           date.getFullYear() === today.getFullYear();
+  };
+
   const renderCalendarDays = () => {
     const daysArray = [];
     const totalDays = getFirstDayOfMonth(currentDate) + getDaysInMonth(currentDate);
@@ -87,19 +94,20 @@ export const Calendar = ({ todos, onMinimize }: CalendarProps) => {
       const isCurrentMonth = dayNumber > 0 && dayNumber <= getDaysInMonth(currentDate);
       const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), dayNumber);
       const todoCount = isCurrentMonth ? getTodosByDate(date) : 0;
+      const isCurrentDay = isToday(date);
 
       daysArray.push(
         <div
           key={i}
           className={`p-3 text-center relative ${
-            isCurrentMonth ? 'text-white' : 'text-gray-600'
-          }`}
+            isCurrentMonth ? 'text-white' : 'text-black'
+          } ${isCurrentDay ? 'bg-white rounded-full' : ''}`}
         >
           {isCurrentMonth && (
             <>
-              <span className="text-lg">{dayNumber}</span>
+              <span className={`text-lg ${isCurrentDay ? 'text-black' : 'text-white'}`}>{dayNumber}</span>
               {todoCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-sm font-bold px-2 py-1 rounded-full">
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-sm font-bold px-2 py-1 rounded-full">
                   {todoCount}
                 </span>
               )}
@@ -115,14 +123,14 @@ export const Calendar = ({ todos, onMinimize }: CalendarProps) => {
   return (
     <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div 
-        className="bg-gray-800 rounded-lg shadow-lg p-8 w-[500px] relative"
+        className="rounded-lg shadow-lg p-8 w-[500px] relative"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
         <button
           onClick={onMinimize}
-          className="absolute bottom-2 right-2 p-1 rounded-full hover:bg-gray-700 transition-colors"
+          className="absolute bottom-2 right-2 p-1 rounded-full transition-colors"
           aria-label="Minimize calendar"
         >
           <svg
@@ -144,7 +152,7 @@ export const Calendar = ({ todos, onMinimize }: CalendarProps) => {
         <div className="flex items-center justify-center mb-8 relative">
           <button
             onClick={() => navigateMonth('prev')}
-            className="absolute left-0 p-3 hover:bg-gray-700 rounded-full transition-colors touch-manipulation"
+            className="absolute left-0 p-3 rounded-full transition-colors touch-manipulation"
             aria-label="Previous month"
           >
             <svg
@@ -167,7 +175,7 @@ export const Calendar = ({ todos, onMinimize }: CalendarProps) => {
 
           <button
             onClick={() => navigateMonth('next')}
-            className="absolute right-0 p-3 hover:bg-gray-700 rounded-full transition-colors touch-manipulation"
+            className="absolute right-0 p-3 rounded-full transition-colors touch-manipulation"
             aria-label="Next month"
           >
             <svg

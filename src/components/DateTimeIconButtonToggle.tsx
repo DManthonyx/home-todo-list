@@ -1,14 +1,12 @@
 interface DateTimeIconButtonToggleProps {
   onMaximize: () => void;
-  isDateTimeVisible: boolean;
 }
 
-export const DateTimeIconButtonToggle = ({ onMaximize, isDateTimeVisible }: DateTimeIconButtonToggleProps) => {
-  if (isDateTimeVisible) return null;
+export const DateTimeIconButtonToggle = ({ onMaximize }: DateTimeIconButtonToggleProps) => {
   return (
     <button
       onClick={onMaximize}
-      className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
+      className="p-2 rounded-full"
       aria-label="Show date and time details"
     >
       <svg

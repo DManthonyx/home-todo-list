@@ -7,7 +7,7 @@ export const OffScreenToggle = () => {
     <>
       <button
         onClick={() => setIsOffScreen(!isOffScreen)}
-        className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-all duration-300 relative z-[60]"
+        className="p-2 text-white rounded-full transition-all duration-300 relative z-[60]"
         aria-label="Toggle off screen mode"
       >
         <svg

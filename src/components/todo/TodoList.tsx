@@ -138,30 +138,17 @@ export const TodoList = ({ onMinimize }: TodoListProps) => {
     }
   };
 
-  const updateDueDate = async (id: string, newDueDate: Date) => {
-    try {
-      const todoRef = doc(db, 'todos', id);
-      await updateDoc(todoRef, {
-        dueDate: Timestamp.fromDate(newDueDate)
-      });
-      setError(null);
-    } catch (error) {
-      console.error('Error updating due date:', error);
-      setError('Error updating due date. Please try again.');
-    }
-  };
-
   if (!currentUser) {
     return null;
   }
 
   return (
-    <div className={"fixed bottom-4 left-4 w-96 bg-gray-800 rounded-lg shadow-lg p-6"}>
+    <div className={"fixed bottom-4 right-4 w-96 rounded-lg shadow-lg p-6"}>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-white">Todo List</h1>
         <button
           onClick={onMinimize}
-          className="p-1 rounded-full hover:bg-gray-700 transition-colors"
+          className="p-1 rounded-full transition-colors"
           aria-label="Minimize todo list"
         >
           <svg
@@ -199,7 +186,6 @@ export const TodoList = ({ onMinimize }: TodoListProps) => {
               onDelete={deleteTodo}
               onEdit={startEditing}
               onSaveEdit={saveEdit}
-              onUpdateDueDate={updateDueDate}
               editingId={editingId}
               editText={editText}
               setEditText={setEditText}
