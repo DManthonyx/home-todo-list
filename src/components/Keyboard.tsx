@@ -1,4 +1,4 @@
-import { useKeyboard } from '../contexts/KeyboardContext';
+import { useKeyboard } from '../hooks/keyboard-hooks';
 
 export const Keyboard = () => {
   const { keyboardRef, handleKeyPress } = useKeyboard();

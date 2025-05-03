@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Todo } from '../../types/todo';
-import { useKeyboard } from '../../contexts/KeyboardContext';
+import { useKeyboard } from '../../hooks/keyboard-hooks';
 
 interface TodoItemProps {
   todo: Todo;

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useKeyboard } from '../../contexts/KeyboardContext';
+import { useKeyboard } from '../../hooks/keyboard-hooks';
 
 interface CreateTodoProps {
   onAdd: (text: string, dueDate: string) => Promise<void>;

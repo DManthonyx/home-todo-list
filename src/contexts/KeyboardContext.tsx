@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useRef, ReactNode } from 'react';
+import { createContext, useState, useRef, ReactNode } from 'react';
 
 interface KeyboardContextType {
   activeInput: HTMLInputElement | HTMLTextAreaElement | null;
@@ -7,15 +7,7 @@ interface KeyboardContextType {
   keyboardRef: React.RefObject<HTMLDivElement | null>;
 }
 
-const KeyboardContext = createContext<KeyboardContextType | null>(null);
-
-export const useKeyboard = () => {
-  const context = useContext(KeyboardContext);
-  if (!context) {
-    throw new Error('useKeyboard must be used within a KeyboardProvider');
-  }
-  return context;
-};
+export const KeyboardContext = createContext<KeyboardContextType | null>(null);
 
 interface KeyboardProviderProps {
   children: ReactNode;
