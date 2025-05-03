@@ -1,8 +1,10 @@
-import { createContext, useState, useRef, ReactNode } from 'react';
+import { createContext, useState, useRef, ReactNode } from "react";
 
 interface KeyboardContextType {
   activeInput: HTMLInputElement | HTMLTextAreaElement | null;
-  setActiveInput: (input: HTMLInputElement | HTMLTextAreaElement | null) => void;
+  setActiveInput: (
+    input: HTMLInputElement | HTMLTextAreaElement | null
+  ) => void;
   handleKeyPress: (key: string) => void;
   keyboardRef: React.RefObject<HTMLDivElement | null>;
 }
@@ -14,44 +16,56 @@ interface KeyboardProviderProps {
 }
 
 export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
-  const [activeInput, setActiveInput] = useState<HTMLInputElement | HTMLTextAreaElement | null>(
-    null
-  );
+  const [activeInput, setActiveInput] = useState<
+    HTMLInputElement | HTMLTextAreaElement | null
+  >(null);
   const keyboardRef = useRef<HTMLDivElement | null>(null);
 
   const handleKeyPress = (key: string) => {
-    if (activeInput) {
-      const start = activeInput.selectionStart || 0;
-      const end = activeInput.selectionEnd || 0;
-      const value = activeInput.value;
+    if (!activeInput) return;
 
-      let newValue: string;
-      if (key === '⌫') {
-        // Only delete if there's text before the cursor
+    const start = activeInput.selectionStart ?? 0;
+    const end = activeInput.selectionEnd ?? 0;
+    const value = activeInput.value;
+
+    let newValue: string;
+    let newCursorPosition: number;
+
+    if (key === "⌫") {
+      if (start === end) {
+        // Single cursor position
         if (start > 0) {
-          newValue = value.substring(0, start - 1) + value.substring(end);
-          activeInput.setSelectionRange(start - 1, start - 1);
+          newValue = value.slice(0, start - 1) + value.slice(end);
+          newCursorPosition = start - 1;
         } else {
           newValue = value;
+          newCursorPosition = start;
         }
       } else {
-        // Insert the key after the cursor position
-        newValue = value.substring(0, end) + key + value.substring(end);
-        activeInput.setSelectionRange(end + 1, end + 1);
+        // Text is selected
+        newValue = value.slice(0, start) + value.slice(end);
+        newCursorPosition = start;
       }
-
-      // Update the input value
-      activeInput.value = newValue;
-
-      // Create a new input reference to trigger re-render
-      const newInput = activeInput.cloneNode(true) as HTMLInputElement | HTMLTextAreaElement;
-      newInput.value = newValue;
-      setActiveInput(newInput);
+    } else {
+      // Insert new character
+      newValue = value.slice(0, start) + key + value.slice(end);
+      newCursorPosition = start + 1;
     }
+
+    // Update input value
+    activeInput.value = newValue;
+
+    // Set cursor position
+    activeInput.setSelectionRange(newCursorPosition, newCursorPosition);
+
+    // Trigger input event to ensure React state updates
+    activeInput.dispatchEvent(new Event("input", { bubbles: true }));
   };
 
   return (
-    <KeyboardContext.Provider value={{ activeInput, setActiveInput, handleKeyPress, keyboardRef }}>
+    <KeyboardContext.Provider
+      value={{ activeInput, setActiveInput, handleKeyPress, keyboardRef }}
+    >
       {children}
     </KeyboardContext.Provider>
   );
