@@ -1,10 +1,8 @@
-import { createContext, useState, useRef, ReactNode } from "react";
+import { createContext, useState, useRef, ReactNode } from 'react';
 
 interface KeyboardContextType {
   activeInput: HTMLInputElement | HTMLTextAreaElement | null;
-  setActiveInput: (
-    input: HTMLInputElement | HTMLTextAreaElement | null
-  ) => void;
+  setActiveInput: (input: HTMLInputElement | HTMLTextAreaElement | null) => void;
   handleKeyPress: (key: string) => void;
   keyboardRef: React.RefObject<HTMLDivElement | null>;
 }
@@ -16,9 +14,9 @@ interface KeyboardProviderProps {
 }
 
 export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
-  const [activeInput, setActiveInput] = useState<
-    HTMLInputElement | HTMLTextAreaElement | null
-  >(null);
+  const [activeInput, setActiveInput] = useState<HTMLInputElement | HTMLTextAreaElement | null>(
+    null
+  );
   const keyboardRef = useRef<HTMLDivElement | null>(null);
 
   const handleKeyPress = (key: string) => {
@@ -31,7 +29,7 @@ export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
     let newValue: string;
     let newCursorPosition: number;
 
-    if (key === "⌫") {
+    if (key === '⌫') {
       if (start === end) {
         // Single cursor position
         if (start > 0) {
@@ -59,13 +57,11 @@ export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
     activeInput.setSelectionRange(newCursorPosition, newCursorPosition);
 
     // Trigger input event to ensure React state updates
-    activeInput.dispatchEvent(new Event("input", { bubbles: true }));
+    activeInput.dispatchEvent(new Event('input', { bubbles: true }));
   };
 
   return (
-    <KeyboardContext.Provider
-      value={{ activeInput, setActiveInput, handleKeyPress, keyboardRef }}
-    >
+    <KeyboardContext.Provider value={{ activeInput, setActiveInput, handleKeyPress, keyboardRef }}>
       {children}
     </KeyboardContext.Provider>
   );

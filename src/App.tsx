@@ -1,30 +1,24 @@
-import { useState, useEffect } from "react";
-import { TodoList } from "./components/todo/TodoList";
-import { Login } from "./components/Login";
-import { AuthProvider } from "./contexts/AuthContext";
-import { useAuth } from "./hooks/auth-hooks";
-import { CalendarWidget } from "./components/CalendarWidget";
-import { KeyboardProvider } from "./contexts/KeyboardContext";
-import { useKeyboard } from "./hooks/keyboard-hooks";
-import { Keyboard } from "./components/Keyboard";
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-  orderBy,
-} from "firebase/firestore";
-import { db } from "./config/firebase";
-import { Todo } from "./types/todo";
-import { CalendarIconButtonToggle } from "./components/CalendarIconButtonToggle";
-import { TodoIconButtonToggle } from "./components/todo/TodoIconButtonToggle";
-import { CryptoWidgets } from "./components/CryptoWidgets";
-import { DateTimeIconButtonToggle } from "./components/DateTimeIconButtonToggle";
-import { WeatherIconButtonToggle } from "./components/WeatherIconButtonToggle";
-import { OffScreenToggle } from "./components/OffScreenToggle";
-import { DateTimeWidget } from "./components/DateTimeWidget";
-import { WeatherWidget } from "./components/WeatherWidget";
-import { LogOutIconButton } from "./components/LogOutIconButton";
+import { useState, useEffect } from 'react';
+import { TodoList } from './components/todo/TodoList';
+import { Login } from './components/Login';
+import { AuthProvider } from './contexts/AuthContext';
+import { useAuth } from './hooks/auth-hooks';
+import { CalendarWidget } from './components/CalendarWidget';
+import { KeyboardProvider } from './contexts/KeyboardContext';
+import { useKeyboard } from './hooks/keyboard-hooks';
+import { Keyboard } from './components/Keyboard';
+import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';
+import { db } from './config/firebase';
+import { Todo } from './types/todo';
+import { CalendarIconButtonToggle } from './components/CalendarIconButtonToggle';
+import { TodoIconButtonToggle } from './components/todo/TodoIconButtonToggle';
+import { CryptoWidgets } from './components/CryptoWidgets';
+import { DateTimeIconButtonToggle } from './components/DateTimeIconButtonToggle';
+import { WeatherIconButtonToggle } from './components/WeatherIconButtonToggle';
+import { OffScreenToggle } from './components/OffScreenToggle';
+import { DateTimeWidget } from './components/DateTimeWidget';
+import { WeatherWidget } from './components/WeatherWidget';
+import { LogOutIconButton } from './components/LogOutIconButton';
 
 const AppContent = () => {
   const { currentUser, logout } = useAuth();
@@ -43,8 +37,8 @@ const AppContent = () => {
       setLogoutError(null);
       await logout();
     } catch (error) {
-      console.error("Logout error:", error);
-      setLogoutError("Failed to logout. Please try again.");
+      console.error('Logout error:', error);
+      setLogoutError('Failed to logout. Please try again.');
     } finally {
       setIsLoggingOut(false);
     }
@@ -54,15 +48,15 @@ const AppContent = () => {
     if (!currentUser) return;
 
     const q = query(
-      collection(db, "todos"),
-      where("userId", "==", currentUser.uid),
-      orderBy("createdAt", "asc")
+      collection(db, 'todos'),
+      where('userId', '==', currentUser.uid),
+      orderBy('createdAt', 'asc')
     );
 
     const unsubscribe = onSnapshot(
       q,
-      (querySnapshot) => {
-        const todosData = querySnapshot.docs.map((doc) => ({
+      querySnapshot => {
+        const todosData = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
           createdAt: doc.data().createdAt?.toDate(),
@@ -70,8 +64,8 @@ const AppContent = () => {
         })) as Todo[];
         setTodos(todosData);
       },
-      (error) => {
-        console.error("Error fetching todos:", error);
+      error => {
+        console.error('Error fetching todos:', error);
       }
     );
 
@@ -88,7 +82,7 @@ const AppContent = () => {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       // Don't close keyboard if clicking on an input or textarea
-      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
         return;
       }
       if (activeInput && !keyboardRef.current?.contains(target)) {
@@ -96,12 +90,12 @@ const AppContent = () => {
       }
     };
 
-    document.addEventListener("focusout", handleBlur);
-    document.addEventListener("mousedown", handleClick, true);
+    document.addEventListener('focusout', handleBlur);
+    document.addEventListener('mousedown', handleClick, true);
 
     return () => {
-      document.removeEventListener("focusout", handleBlur);
-      document.removeEventListener("mousedown", handleClick, true);
+      document.removeEventListener('focusout', handleBlur);
+      document.removeEventListener('mousedown', handleClick, true);
     };
   }, [setActiveInput, keyboardRef, activeInput]);
 
@@ -123,31 +117,20 @@ const AppContent = () => {
           </div>
           <div className="widget-icon-button-container flex items-center gap-4">
             {!isDateTimeVisible && (
-              <DateTimeIconButtonToggle
-                onMaximize={() => setIsDateTimeVisible(true)}
-              />
+              <DateTimeIconButtonToggle onMaximize={() => setIsDateTimeVisible(true)} />
             )}
             {!isWeatherVisible && (
-              <WeatherIconButtonToggle
-                onMaximize={() => setIsWeatherVisible(true)}
-              />
+              <WeatherIconButtonToggle onMaximize={() => setIsWeatherVisible(true)} />
             )}
             {!isCalendarVisible && (
-              <CalendarIconButtonToggle
-                onClick={() => setIsCalendarVisible(!isCalendarVisible)}
-              />
+              <CalendarIconButtonToggle onClick={() => setIsCalendarVisible(!isCalendarVisible)} />
             )}
             {!isTodoListVisible && (
-              <TodoIconButtonToggle
-                onClick={() => setIsTodoListVisible(!isTodoListVisible)}
-              />
+              <TodoIconButtonToggle onClick={() => setIsTodoListVisible(!isTodoListVisible)} />
             )}
             <div className="relative">
               {currentUser && (
-                <LogOutIconButton
-                  handleLogout={handleLogout}
-                  isLoggingOut={isLoggingOut}
-                />
+                <LogOutIconButton handleLogout={handleLogout} isLoggingOut={isLoggingOut} />
               )}
               {logoutError && (
                 <div className="absolute right-0 top-full mt-2 p-2 bg-red-500 text-white text-sm rounded shadow-lg">
@@ -161,10 +144,7 @@ const AppContent = () => {
       </div>
       <div className="flex-1 pt-16">
         {isCalendarVisible && (
-          <CalendarWidget
-            todos={todos}
-            onMinimize={() => setIsCalendarVisible(false)}
-          />
+          <CalendarWidget todos={todos} onMinimize={() => setIsCalendarVisible(false)} />
         )}
       </div>
       <CryptoWidgets />

@@ -155,12 +155,11 @@ export const TodoList = ({ onMinimize }: TodoListProps) => {
   }
 
   return (
-    <div className={'fixed bottom-4 right-4 w-96 rounded-lg shadow-lg p-6'}>
+    <div className={'fixed bottom-4 right-4 w-80 rounded-lg shadow-lg'}>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-white">Todo List</h1>
         <button
           onClick={onMinimize}
-          className="p-1 rounded-full transition-colors"
+          className="p-1 absolute top-0 right-0 rounded-full transition-colors"
           aria-label="Minimize todo list"
         >
           <svg
