@@ -5,4 +5,4 @@ export interface Todo {
   userId: string;
   createdAt: Date;
   dueDate: Date;
-} 
+}

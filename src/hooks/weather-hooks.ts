@@ -22,34 +22,38 @@ export const useWeather = () => {
 
       try {
         setLoading(true);
-        
+
         // Fetch current weather
         const currentUrl = `${BASE_URL}/weather?q=${CITY},US&units=imperial&appid=${API_KEY}`;
         console.log('Fetching current weather from:', currentUrl);
-        
+
         const currentResponse = await fetch(currentUrl);
-        
+
         if (!currentResponse.ok) {
           const errorData = await currentResponse.json();
           console.error('Current weather API error:', errorData);
-          throw new Error(`Failed to fetch current weather: ${errorData.message || currentResponse.statusText}`);
+          throw new Error(
+            `Failed to fetch current weather: ${errorData.message || currentResponse.statusText}`
+          );
         }
-        
+
         const currentData: WeatherResponse = await currentResponse.json();
         console.log('Current weather data:', currentData);
-        
+
         // Fetch 7-day forecast
         const forecastUrl = `${BASE_URL}/forecast?q=${CITY},US&units=imperial&appid=${API_KEY}`;
         console.log('Fetching forecast from:', forecastUrl);
-        
+
         const forecastResponse = await fetch(forecastUrl);
-        
+
         if (!forecastResponse.ok) {
           const errorData = await forecastResponse.json();
           console.error('Forecast API error:', errorData);
-          throw new Error(`Failed to fetch weather forecast: ${errorData.message || forecastResponse.statusText}`);
+          throw new Error(
+            `Failed to fetch weather forecast: ${errorData.message || forecastResponse.statusText}`
+          );
         }
-        
+
         const forecastData: ForecastResponse = await forecastResponse.json();
         console.log('Forecast data:', forecastData);
 
@@ -60,7 +64,7 @@ export const useWeather = () => {
           description: currentData.weather[0].description,
           icon: currentData.weather[0].icon,
           humidity: currentData.main.humidity,
-          windSpeed: Math.round(currentData.wind.speed)
+          windSpeed: Math.round(currentData.wind.speed),
         };
 
         // Transform forecast data (get one forecast per day)
@@ -72,7 +76,7 @@ export const useWeather = () => {
             description: item.weather[0].description,
             icon: item.weather[0].icon,
             humidity: item.main.humidity,
-            windSpeed: Math.round(item.wind.speed)
+            windSpeed: Math.round(item.wind.speed),
           }));
 
         setCurrentWeather(transformedCurrent);
@@ -90,4 +94,4 @@ export const useWeather = () => {
   }, []);
 
   return { currentWeather, weather, loading, error };
-}; 
+};

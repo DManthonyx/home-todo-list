@@ -1,10 +1,10 @@
 import { createContext, useEffect, useState, ReactNode } from 'react';
-import { 
+import {
   User,
   signInWithPopup,
   GoogleAuthProvider,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { auth } from '../config/firebase';
 
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
       setCurrentUser(user);
       setLoading(false);
     });
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({
-        prompt: 'select_account'
+        prompt: 'select_account',
       });
       await signInWithPopup(auth, provider);
     } catch (error) {
@@ -55,12 +55,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     currentUser,
     loading,
     signInWithGoogle,
-    logout
+    logout,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
-}; 
+  return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
+};

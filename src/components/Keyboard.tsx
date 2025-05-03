@@ -6,7 +6,7 @@ export const Keyboard = () => {
     ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-    ['z', 'x', 'c', 'v', 'b', 'n', 'm', '⌫']
+    ['z', 'x', 'c', 'v', 'b', 'n', 'm', '⌫'],
   ];
 
   const handleKeyClick = (key: string) => {
@@ -20,7 +20,7 @@ export const Keyboard = () => {
   };
 
   return (
-    <div 
+    <div
       ref={keyboardRef}
       className="fixed left-1/2 -translate-x-1/2 bottom-0 rounded-t-lg shadow-lg p-6 z-50"
       onClick={handleContainerClick}
@@ -29,7 +29,7 @@ export const Keyboard = () => {
       <div className="grid gap-3">
         {keys.map((row, rowIndex) => (
           <div key={rowIndex} className="flex gap-3 justify-center">
-            {row.map((key) => (
+            {row.map(key => (
               <button
                 key={key}
                 type="button"
@@ -46,4 +46,4 @@ export const Keyboard = () => {
       </div>
     </div>
   );
-}; 
+};

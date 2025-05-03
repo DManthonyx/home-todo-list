@@ -102,4 +102,4 @@ export interface ForecastResponse {
     sunrise: number;
     sunset: number;
   };
-} 
+}

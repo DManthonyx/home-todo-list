@@ -14,7 +14,9 @@ interface KeyboardProviderProps {
 }
 
 export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
-  const [activeInput, setActiveInput] = useState<HTMLInputElement | HTMLTextAreaElement | null>(null);
+  const [activeInput, setActiveInput] = useState<HTMLInputElement | HTMLTextAreaElement | null>(
+    null
+  );
   const keyboardRef = useRef<HTMLDivElement | null>(null);
 
   const handleKeyPress = (key: string) => {
@@ -22,7 +24,7 @@ export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
       const start = activeInput.selectionStart || 0;
       const end = activeInput.selectionEnd || 0;
       const value = activeInput.value;
-      
+
       let newValue: string;
       if (key === '⌫') {
         // Only delete if there's text before the cursor
@@ -53,4 +55,4 @@ export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
       {children}
     </KeyboardContext.Provider>
   );
-}; 
+};

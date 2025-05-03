@@ -7,4 +7,4 @@ export const useKeyboard = () => {
     throw new Error('useKeyboard must be used within a KeyboardProvider');
   }
   return context;
-}; 
+};

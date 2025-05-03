@@ -36,10 +36,10 @@ export const TodoItem = ({
 
   useEffect(() => {
     if (activeInput?.id === `edit-todo-${todo.id}`) {
-        const input = activeInput as HTMLInputElement;
-        setEditText(input.value);
+      const input = activeInput as HTMLInputElement;
+      setEditText(input.value);
     }
-}, [activeInput, todo.id, setEditText]);
+  }, [activeInput, todo.id, setEditText]);
 
   return (
     <li className="flex flex-col p-3 rounded-lg">
@@ -61,7 +61,7 @@ export const TodoItem = ({
               className="flex-1 w-full px-3 py-1 bg-gray-600 text-white border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[60px] resize-none"
             />
           ) : (
-            <span 
+            <span
               className={`
                 break-words whitespace-pre-wrap flex-1
                 ${todo.completed ? 'line-through text-gray-400' : 'text-white'}
@@ -89,16 +89,10 @@ export const TodoItem = ({
             </>
           ) : (
             <>
-              <button
-                onClick={() => onEdit(todo)}
-                className="px-3 py-1 text-white"
-              >
+              <button onClick={() => onEdit(todo)} className="px-3 py-1 text-white">
                 Edit
               </button>
-              <button
-                onClick={() => onDelete(todo.id)}
-                className="px-3 py-1 text-white"
-              >
+              <button onClick={() => onDelete(todo.id)} className="px-3 py-1 text-white">
                 Delete
               </button>
             </>
@@ -106,10 +100,8 @@ export const TodoItem = ({
         </div>
       </div>
       <div className="mt-2 flex items-center gap-2">
-        <span className="text-sm text-gray-400">
-          Due: {formatDate(todo.dueDate)}
-        </span>
+        <span className="text-sm text-gray-400">Due: {formatDate(todo.dueDate)}</span>
       </div>
     </li>
   );
-}; 
+};

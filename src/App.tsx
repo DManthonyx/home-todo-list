@@ -53,17 +53,18 @@ const AppContent = () => {
       orderBy('createdAt', 'asc')
     );
 
-    const unsubscribe = onSnapshot(q, 
-      (querySnapshot) => {
+    const unsubscribe = onSnapshot(
+      q,
+      querySnapshot => {
         const todosData = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
           createdAt: doc.data().createdAt?.toDate(),
-          dueDate: doc.data().dueDate?.toDate()
+          dueDate: doc.data().dueDate?.toDate(),
         })) as Todo[];
         setTodos(todosData);
       },
-      (error) => {
+      error => {
         console.error('Error fetching todos:', error);
       }
     );
@@ -98,33 +99,33 @@ const AppContent = () => {
       <div className="fixed top-0 left-0 right-0 z-50">
         <div className="flex justify-end items-center gap-4 p-4">
           <div className="fixed top-4 left-2 transition-opacity duration-500">
-            <DateTimeWidget isDateTimeVisible={isDateTimeVisible} onMinimize={() => setIsDateTimeVisible(false)} />
+            <DateTimeWidget
+              isDateTimeVisible={isDateTimeVisible}
+              onMinimize={() => setIsDateTimeVisible(false)}
+            />
           </div>
           <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
-            <WeatherWidget 
+            <WeatherWidget
               isWeatherVisible={isWeatherVisible}
-              onMinimize={() => setIsWeatherVisible(false)} 
+              onMinimize={() => setIsWeatherVisible(false)}
             />
           </div>
           <div className="widget-icon-button-container flex items-center gap-4">
-            {!isDateTimeVisible && <DateTimeIconButtonToggle 
-              onMaximize={() => setIsDateTimeVisible(true)} 
-            />}
-            {!isWeatherVisible && <WeatherIconButtonToggle 
-              onMaximize={() => setIsWeatherVisible(true)} 
-            />}
-            {!isCalendarVisible && <CalendarIconButtonToggle
-              onClick={() => setIsCalendarVisible(!isCalendarVisible)}
-            />}
-            {!isTodoListVisible && <TodoIconButtonToggle
-              onClick={() => setIsTodoListVisible(!isTodoListVisible)}
-            />}
+            {!isDateTimeVisible && (
+              <DateTimeIconButtonToggle onMaximize={() => setIsDateTimeVisible(true)} />
+            )}
+            {!isWeatherVisible && (
+              <WeatherIconButtonToggle onMaximize={() => setIsWeatherVisible(true)} />
+            )}
+            {!isCalendarVisible && (
+              <CalendarIconButtonToggle onClick={() => setIsCalendarVisible(!isCalendarVisible)} />
+            )}
+            {!isTodoListVisible && (
+              <TodoIconButtonToggle onClick={() => setIsTodoListVisible(!isTodoListVisible)} />
+            )}
             <div className="relative">
               {currentUser && (
-                <LogOutIconButton
-                  handleLogout={handleLogout}
-                  isLoggingOut={isLoggingOut}
-                />
+                <LogOutIconButton handleLogout={handleLogout} isLoggingOut={isLoggingOut} />
               )}
               {logoutError && (
                 <div className="absolute right-0 top-full mt-2 p-2 bg-red-500 text-white text-sm rounded shadow-lg">
@@ -137,12 +138,16 @@ const AppContent = () => {
         </div>
       </div>
       <div className="flex-1 pt-16">
-        {isCalendarVisible && <CalendarWidget todos={todos} onMinimize={() => setIsCalendarVisible(false)} />}
+        {isCalendarVisible && (
+          <CalendarWidget todos={todos} onMinimize={() => setIsCalendarVisible(false)} />
+        )}
       </div>
-        <CryptoWidgets />
-        {!currentUser && <Login />}
-        {currentUser && isTodoListVisible && <TodoList onMinimize={() => setIsTodoListVisible(false)} />}
-        {activeInput && <Keyboard />}
+      <CryptoWidgets />
+      {!currentUser && <Login />}
+      {currentUser && isTodoListVisible && (
+        <TodoList onMinimize={() => setIsTodoListVisible(false)} />
+      )}
+      {activeInput && <Keyboard />}
     </main>
   );
 };

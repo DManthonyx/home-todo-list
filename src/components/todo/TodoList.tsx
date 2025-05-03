@@ -1,7 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Todo } from '../../types/todo';
 import { db } from '../../config/firebase';
-import { collection, addDoc, deleteDoc, updateDoc, doc, query, where, onSnapshot, orderBy, Timestamp } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  deleteDoc,
+  updateDoc,
+  doc,
+  query,
+  where,
+  onSnapshot,
+  orderBy,
+  Timestamp,
+} from 'firebase/firestore';
 import { useAuth } from '../../hooks/auth-hooks';
 import { TodoItem } from './TodoItem';
 import { CreateTodo } from './CreateTodo';
@@ -26,18 +37,19 @@ export const TodoList = ({ onMinimize }: TodoListProps) => {
       orderBy('createdAt', 'asc')
     );
 
-    const unsubscribe = onSnapshot(q, 
-      (querySnapshot) => {
+    const unsubscribe = onSnapshot(
+      q,
+      querySnapshot => {
         const todosData = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
           createdAt: doc.data().createdAt?.toDate(),
-          dueDate: doc.data().dueDate?.toDate()
+          dueDate: doc.data().dueDate?.toDate(),
         })) as Todo[];
         setTodos(todosData);
         setError(null);
       },
-      (error) => {
+      error => {
         console.error('Error fetching todos:', error);
         setError('Error loading todos. Please try again.');
       }
@@ -56,7 +68,7 @@ export const TodoList = ({ onMinimize }: TodoListProps) => {
     return date.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
-      year: 'numeric'
+      year: 'numeric',
     });
   };
 
@@ -79,7 +91,7 @@ export const TodoList = ({ onMinimize }: TodoListProps) => {
           completed: false,
           userId: currentUser.uid,
           createdAt: Timestamp.fromDate(now),
-          dueDate: Timestamp.fromDate(dueDateObj)
+          dueDate: Timestamp.fromDate(dueDateObj),
         };
         await addDoc(collection(db, 'todos'), todoData);
         setError(null);
@@ -106,7 +118,7 @@ export const TodoList = ({ onMinimize }: TodoListProps) => {
       const todo = todos.find(t => t.id === id);
       if (todo) {
         await updateDoc(todoRef, {
-          completed: !todo.completed
+          completed: !todo.completed,
         });
         setError(null);
       }
@@ -126,7 +138,7 @@ export const TodoList = ({ onMinimize }: TodoListProps) => {
       try {
         const todoRef = doc(db, 'todos', id);
         await updateDoc(todoRef, {
-          text: editText.trim()
+          text: editText.trim(),
         });
         setEditingId(null);
         setEditText('');
@@ -143,7 +155,7 @@ export const TodoList = ({ onMinimize }: TodoListProps) => {
   }
 
   return (
-    <div className={"fixed bottom-4 right-4 w-96 rounded-lg shadow-lg p-6"}>
+    <div className={'fixed bottom-4 right-4 w-96 rounded-lg shadow-lg p-6'}>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-white">Todo List</h1>
         <button
@@ -158,27 +170,18 @@ export const TodoList = ({ onMinimize }: TodoListProps) => {
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </button>
       </div>
-      
-      {error && (
-        <div className="mb-4 p-3 bg-red-500 text-white rounded-lg">
-          {error}
-        </div>
-      )}
+
+      {error && <div className="mb-4 p-3 bg-red-500 text-white rounded-lg">{error}</div>}
 
       <CreateTodo onAdd={handleAddTodo} />
 
       <div className="max-h-96 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <ul className="space-y-3">
-          {todos.map((todo) => (
+          {todos.map(todo => (
             <TodoItem
               key={todo.id}
               todo={todo}
@@ -197,4 +200,4 @@ export const TodoList = ({ onMinimize }: TodoListProps) => {
       </div>
     </div>
   );
-}; 
+};

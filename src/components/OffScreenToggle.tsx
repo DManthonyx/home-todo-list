@@ -25,11 +25,11 @@ export const OffScreenToggle = () => {
           />
         </svg>
       </button>
-      <div 
+      <div
         className={`fixed inset-0 bg-black transition-opacity duration-300 z-50 ${
           isOffScreen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`} 
+        }`}
       />
     </>
   );
-}; 
+};

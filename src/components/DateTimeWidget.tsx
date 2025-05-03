@@ -21,7 +21,7 @@ export const DateTimeWidget = ({ onMinimize, isDateTimeVisible }: DateTimeWidget
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
-      hour12: true
+      hour12: true,
     });
   };
 
@@ -30,7 +30,7 @@ export const DateTimeWidget = ({ onMinimize, isDateTimeVisible }: DateTimeWidget
       weekday: 'long',
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
@@ -53,15 +53,10 @@ export const DateTimeWidget = ({ onMinimize, isDateTimeVisible }: DateTimeWidget
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </button>
       </div>
     </div>
   );
-}; 
+};

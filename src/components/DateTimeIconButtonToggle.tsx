@@ -25,4 +25,4 @@ export const DateTimeIconButtonToggle = ({ onMaximize }: DateTimeIconButtonToggl
       </svg>
     </button>
   );
-}; 
+};
